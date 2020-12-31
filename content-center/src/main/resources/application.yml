@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/content_center?serverTimezone=Australia/Melbourne
+    hikari:
+      username: root
+      password: 123456
+      #if version in Maven >= 6.x, then com.mysql.cj.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+#        namespace: 47a81bc5-ab3a-4036-afe6-645481d9ee01
+#        group: DEFAULT_GROUP
+#        cluster-name: Melbourne
+
+  application:
+    name: content-center
+
+server:
+  port: 8081
