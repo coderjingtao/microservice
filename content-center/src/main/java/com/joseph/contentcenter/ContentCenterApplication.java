@@ -17,8 +17,16 @@ public class ContentCenterApplication {
 
     //在spring容器中，创建一个对象,类型为RestTemplate,名称/ID为方法名:restTemplate
     //对应传统的spring xml配置：<bean id="restTemplate" class="xxx.RestTemplate"/>
+
+    /**
+     * /@Bean
+     * 在spring容器中，创建一个对象,类型为RestTemplate,名称/ID为方法名:restTemplate
+     * 对应传统的spring xml配置：<bean id="restTemplate" class="xxx.RestTemplate"/>
+     * /@LoadBalanced
+     * 整合ribbon负载均衡,默认是轮询算法，依次请求每个微服务
+     */
     @Bean
-    @LoadBalanced //整合ribbon负载均衡
+    @LoadBalanced
     public RestTemplate restTemplate(){
         return new RestTemplate();
     }

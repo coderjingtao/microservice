@@ -12,10 +12,25 @@ spring:
   cloud:
     nacos:
       discovery:
+        #指定 nacos server的地址
         server-addr: localhost:8848
+        #指定 namespace (dev) Nacos功能路径：命名空间 -> 新建命名空间 -> 复制新建命名空间的ID
 #        namespace: 47a81bc5-ab3a-4036-afe6-645481d9ee01
+        #指定 group
 #        group: DEFAULT_GROUP
+        #指定 集群cluster
 #        cluster-name: Melbourne
 
   application:
     name: content-center
+
+#user-center:
+#  ribbon:
+#    # 指定ribbon负载均衡的规则,例如：com.netflix.loadbalancer.RandomRule
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+
+#开启ribbon饥饿加载，否则只有调用微服务时才会创建client,多个client需要用逗号分离
+ribbon:
+  eager-load:
+    enabled: true
+    clients: user-center
