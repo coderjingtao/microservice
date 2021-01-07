@@ -22,4 +22,18 @@ public class UserController {
     public User findById(@PathVariable Integer id){
         return this.userService.findById(id);
     }
+
+    @GetMapping("/create")
+    public User createUser(){
+        User user = new User();
+        user.setRoles("admin");
+        user.setAvatarUrl("xxx");
+        user.setBonus(200);
+        user.setWxId("wx2");
+        user.setWxNickname("我是小涛涛");
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        userService.saveUser(user);
+        return user;
+    }
 }

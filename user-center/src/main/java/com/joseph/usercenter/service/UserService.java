@@ -14,4 +14,8 @@ public class UserService {
     public User findById(Integer id){
         return this.userMapper.selectByPrimaryKey(id);
     }
+
+    public void saveUser(User user){
+        this.userMapper.insertSelective(user);
+    }
 }
