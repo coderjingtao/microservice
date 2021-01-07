@@ -14,7 +14,7 @@ spring:
       discovery:
         #指定 nacos server的地址
         server-addr: localhost:8848
-        #指定 namespace (dev)
+        #指定 namespace (dev) Nacos功能路径：命名空间 -> 新建命名空间 -> 复制新建命名空间的ID
 #        namespace: 47a81bc5-ab3a-4036-afe6-645481d9ee01
         #指定 group
 #        group: DEFAULT_GROUP
