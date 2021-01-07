@@ -1,3 +1,5 @@
+server:
+  port: 8871
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/content_center?serverTimezone=Australia/Melbourne
@@ -17,6 +19,3 @@ spring:
 
   application:
     name: content-center
-
-server:
-  port: 8081

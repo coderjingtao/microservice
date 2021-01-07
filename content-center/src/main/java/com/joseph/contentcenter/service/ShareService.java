@@ -60,4 +60,8 @@ public class ShareService {
         System.out.println(entity.getBody());
         System.out.println(entity.getStatusCode());
     }
+
+    public void saveShare(Share share){
+        this.shareMapper.insertSelective(share);
+    }
 }
