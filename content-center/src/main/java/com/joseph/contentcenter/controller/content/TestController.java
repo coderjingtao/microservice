@@ -1,5 +1,8 @@
 package com.joseph.contentcenter.controller.content;
 
+import com.joseph.contentcenter.domain.dto.user.UserDTO;
+import com.joseph.contentcenter.feignclient.StandAloneFeignClient;
+import com.joseph.contentcenter.feignclient.UserCenterFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -31,5 +34,19 @@ public class TestController {
     @GetMapping("/queryAll")
     public List<String> queryAllRegisteredService(){
         return this.discoveryClient.getServices();
+    }
+
+    @Autowired
+    UserCenterFeignClient userCenterFeignClient;
+    @GetMapping("/test-query")
+    public UserDTO query(UserDTO userDTO){
+        return userCenterFeignClient.query(userDTO);
+    }
+
+    @Autowired
+    StandAloneFeignClient standAloneFeignClient;
+    @GetMapping("/google")
+    public String googleIndex(){
+        return standAloneFeignClient.index();
     }
 }

@@ -4,6 +4,7 @@ import com.joseph.contentcenter.dao.content.ShareMapper;
 import com.joseph.contentcenter.domain.dto.content.ShareDTO;
 import com.joseph.contentcenter.domain.dto.user.UserDTO;
 import com.joseph.contentcenter.domain.entity.content.Share;
+import com.joseph.contentcenter.feignclient.UserCenterFeignClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -18,9 +19,7 @@ import org.springframework.web.client.RestTemplate;
 public class ShareService {
     private final ShareMapper shareMapper;
 
-    private final RestTemplate restTemplate;
-
-//    private final DiscoveryClient discoveryClient;
+    private final UserCenterFeignClient userCenterFeignClient;
 
     public ShareDTO findById(Integer id) throws Exception {
         //获取分享详情
@@ -29,8 +28,8 @@ public class ShareService {
         Integer userId = share.getUserId();
         //通过微服务通信，获取分布人的用户信息
 
-        //ribbon自动会把user-center转换成用户中心在nacos上面注册的地址
-        UserDTO userDto = this.restTemplate.getForObject("http://user-center/users/{userId}",UserDTO.class,userId);
+        //通过feign client调用微服务
+        UserDTO userDto = this.userCenterFeignClient.findByUserId(userId);
 
         //消息的装配
         ShareDTO shareDTO = new ShareDTO();

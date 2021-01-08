@@ -26,6 +26,16 @@ public class UserController {
         return this.userService.findById(id);
     }
 
+    /**
+     * url: q?id=123&wxId=456&....
+     * @param user
+     * @return
+     */
+    @GetMapping("/q")
+    public User query(User user){
+        return user;
+    }
+
     @GetMapping("/create")
     public User createUser(){
         User user = new User();
