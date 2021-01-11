@@ -19,8 +19,11 @@ spring:
         #指定 group
 #        group: DEFAULT_GROUP
         #指定 集群cluster
-#        cluster-name: Melbourne
-
+    sentinel:
+      transport:
+        #指定 sentinel 控制台的地址
+        dashboard: localhost:8080
+  #        cluster-name: Melbourne
   application:
     name: content-center
 
@@ -51,6 +54,16 @@ feign:
     max-connections: 200
     # feign单个路径的最大连接数，例如：http://user-center/users/{userId}
     max-connections-per-route: 50
+  sentinel:
+    # feign 整合 sentinel
+    enabled: true
 logging:
   level:
     com.joseph.contentcenter: debug
+
+# Actuator 暴露所有的端点，这样才能显示出已经整合了 sentinel
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

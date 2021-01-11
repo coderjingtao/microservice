@@ -1,5 +1,5 @@
 server:
-  port: 8882
+  port: 8881
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/user_center?serverTimezone=Australia/Melbourne
