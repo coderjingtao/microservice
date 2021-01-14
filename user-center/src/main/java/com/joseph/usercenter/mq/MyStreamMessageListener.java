@@ -30,5 +30,6 @@ public class MyStreamMessageListener {
     public void error(Message<?> message){
         ErrorMessage errorMessage = (ErrorMessage) message;
         log.error("stream发生异常, errorMessage = {}",errorMessage);
+        //错误处理的逻辑
     }
 }

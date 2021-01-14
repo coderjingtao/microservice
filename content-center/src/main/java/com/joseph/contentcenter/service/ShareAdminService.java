@@ -33,7 +33,7 @@ public class ShareAdminService {
     private final RocketmqTransactionLogMapper rocketmqTransactionLogMapper;
 
     /**
-     * 审核分享的文章，审核通过后用RocketMQ事务消息来更新用户中心的积分
+     * 审核分享的文章，审核通过后使用RocketMQ的RocketMQTemplate进行分布式的事务消息来更新用户中心的积分
      * @param shareId 分享的文章id
      * @param shareAuditDTO 审核的状态：PASS or REJECT
      * @return 返回分享的文章
