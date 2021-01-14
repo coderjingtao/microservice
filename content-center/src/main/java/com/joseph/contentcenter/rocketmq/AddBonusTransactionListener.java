@@ -1,5 +1,6 @@
 package com.joseph.contentcenter.rocketmq;
 
+import com.alibaba.fastjson.JSON;
 import com.joseph.contentcenter.dao.content.RocketmqTransactionLogMapper;
 import com.joseph.contentcenter.domain.dto.content.ShareAuditDTO;
 import com.joseph.contentcenter.domain.entity.content.RocketmqTransactionLog;
@@ -15,7 +16,7 @@ import org.springframework.messaging.MessageHeaders;
 
 /**
  * 监听MQ,得到半消息是否发送成功
- * txProducerGroup中的名称需要与ShareAdminService中发送半消息给MQ的方法中的名称保持一致
+ * txProducerGroup中的名称需要与Application.yml文件中的stream.rocketmq.bindings.output.producer.group的名称一致
  * @author Joseph.Liu
  */
 @RocketMQTransactionListener(txProducerGroup = "tx-add-bonus-group")
@@ -27,7 +28,7 @@ public class AddBonusTransactionListener implements RocketMQLocalTransactionList
     /**
      * 执行本地事务，返回执行本地事务的状态：成功或失败，对应流程图中的第3步和第4步
      * @param message 发送的消息
-     * @param o  该参数用来传递其他有用的参数，一般来说都会组装成一个DTO对象，本方法中是审批分享文章结果的DTO
+     * @param o  该参数用来传递其他有用的参数，一般来说都会组装成一个DTO对象，本方法中是null,因为已经把dto放到消息体的header中
      * @return 返回本地事务的执行结果 Commit or Rollback
      */
     @Override
@@ -35,10 +36,11 @@ public class AddBonusTransactionListener implements RocketMQLocalTransactionList
         MessageHeaders headers = message.getHeaders();
         String transactionId = (String) headers.get(RocketMQHeaders.TRANSACTION_ID);
         Integer shareId = Integer.valueOf((String) headers.get("share_id"));
+        String dtoJsonString = (String) headers.get("shareAuditDTO");
+        ShareAuditDTO shareAuditDTO = JSON.parseObject(dtoJsonString, ShareAuditDTO.class);
         try {
             //执行本地事务
-//            this.shareAdminService.auditByShareIdInDb(shareId, (ShareAuditDTO) o);
-            this.shareAdminService.auditByShareIdWithMqTransactionLog(shareId, (ShareAuditDTO) o,transactionId);
+            this.shareAdminService.auditByShareIdWithMqTransactionLog(shareId,shareAuditDTO,transactionId);
             return RocketMQLocalTransactionState.COMMIT;
         } catch (Exception e) {
             return RocketMQLocalTransactionState.ROLLBACK;

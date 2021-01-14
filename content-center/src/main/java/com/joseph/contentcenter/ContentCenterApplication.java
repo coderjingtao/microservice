@@ -1,6 +1,5 @@
 package com.joseph.contentcenter;
 
-import com.joseph.contentcenter.rocketmq.MySource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -21,7 +20,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @MapperScan("com.joseph.contentcenter.dao")
 @SpringBootApplication
 @EnableFeignClients
-@EnableBinding({Source.class, MySource.class})
+@EnableBinding(Source.class)
 public class ContentCenterApplication {
 
     public static void main(String[] args) {

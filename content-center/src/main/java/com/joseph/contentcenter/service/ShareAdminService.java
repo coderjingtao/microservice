@@ -1,5 +1,6 @@
 package com.joseph.contentcenter.service;
 
+import com.alibaba.fastjson.JSON;
 import com.joseph.contentcenter.dao.content.RocketmqTransactionLogMapper;
 import com.joseph.contentcenter.dao.content.ShareMapper;
 import com.joseph.contentcenter.domain.dto.content.ShareAuditDTO;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,9 +30,9 @@ public class ShareAdminService {
 
     private final ShareMapper shareMapper;
 
-    private final RocketMQTemplate rocketMQTemplate;
-
     private final RocketmqTransactionLogMapper rocketmqTransactionLogMapper;
+
+    private final Source source;
 
     /**
      * 审核分享的文章，审核通过后使用RocketMQ的RocketMQTemplate进行分布式的事务消息来更新用户中心的积分
@@ -51,12 +53,8 @@ public class ShareAdminService {
         if(shareAuditDTO.getAuditStatusEnum().equals(AuditStatusEnum.PASS)){
             //2.1 发送半消息给RocketMQ
             String transactionId = UUID.randomUUID().toString();
-            this.rocketMQTemplate.sendMessageInTransaction(
-                    //随便起个名字即可,但需要和AddBonusTransactionListener中的保持一致
-                    "tx-add-bonus-group",
-                    //message topic
-                    "add-bonus",
-                    // message body
+            //用spring cloud stream发送消息
+            this.source.output().send(
                     MessageBuilder
                             .withPayload(
                                     UserAddBonusMessageDTO.builder()
@@ -64,29 +62,17 @@ public class ShareAdminService {
                                             .bonus(50)
                                             .build()
                             )
-                            //header 也有妙用
+                            //header用来传参, 但只能传string.所以需要把对象转为Json string
                             .setHeader(RocketMQHeaders.TRANSACTION_ID, transactionId)
                             .setHeader("share_id", shareId)
+                            .setHeader("shareAuditDTO", JSON.toJSONString(shareAuditDTO))
                             .build()
-                    ,
-                    //arg有大用处
-                    shareAuditDTO
             );
         }
         //3.如果是 REJECT, 不需要发消息给用户中心来更新用户的积分，只需要把数据库中的审批状态设为Reject
         else{
             auditByShareIdInDb(shareId, shareAuditDTO);
         }
-
-
-        //        直接发送完整消息给MQ
-//        this.rocketMQTemplate.convertAndSend("add-bonus",
-//                UserAddBonusMessageDTO.builder()
-//                .userId(share.getUserId())
-//                .bonus(50)
-//                .build()
-//        );
-
         return share;
     }
 

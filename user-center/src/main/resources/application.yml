@@ -27,22 +27,10 @@ spring:
       bindings:
         input:
           #用来指定消费消息的topic,需要和生产的消息的topic一致
-          destination: stream-test-topic
+          destination: add-bonus
           #一定要设置，但可以随便写。如果使用的是非RocketMQ,可以不设置
           group: binder-group
-        #自定义stream接口消费消息,必须与MySink.java中定义的名字一致
-        my-input:
-          #用来指定消费消息的topic,需要和生产的消息的topic一致
-          destination: stream-my-topic
-          #一定要设置，但可以随便写。如果使用的是非RocketMQ,可以不设置
-          group: my-group
 
   application:
     # use -, do not use _ and special characters
     name: user-center
-
-rocketmq:
-  name-server: 127.0.0.1:9876
-  producer:
-    #必须指定group
-    group: test-group

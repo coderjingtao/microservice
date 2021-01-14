@@ -32,14 +32,16 @@ spring:
             vipChannelEnabled: false
         binder:
           name-server: 127.0.0.1:9876
+        bindings:
+          output:
+            producer:
+              # 实现分布式事务消息
+              transactional: true
+              group: tx-add-bonus-group
       bindings:
         output:
           #用来指定生产消息的topic
-          destination: stream-test-topic
-        #自定义stream接口发送消息,必须与MySource.java中定义的名字一致
-        my-output:
-          #用来指定生产消息的topic
-          destination: stream-my-topic
+          destination: add-bonus
 
   application:
     name: content-center
@@ -83,9 +85,3 @@ management:
     web:
       exposure:
         include: '*'
-
-rocketmq:
-  name-server: 127.0.0.1:9876
-  producer:
-    #必须指定group
-    group: test-group
