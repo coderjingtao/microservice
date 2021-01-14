@@ -3,9 +3,13 @@ package com.joseph.contentcenter.controller.content;
 import com.joseph.contentcenter.domain.dto.user.UserDTO;
 import com.joseph.contentcenter.feignclient.StandAloneFeignClient;
 import com.joseph.contentcenter.feignclient.UserCenterFeignClient;
+import com.joseph.contentcenter.rocketmq.MySource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,5 +52,31 @@ public class TestController {
     @GetMapping("/google")
     public String googleIndex(){
         return standAloneFeignClient.index();
+    }
+
+    @Autowired
+    private Source source;
+    @GetMapping("/test-stream")
+    public String testSpringCloudStream(){
+        this.source.output()
+                .send(
+                        MessageBuilder
+                                .withPayload("消息体")
+                                .build()
+                );
+        return "success";
+    }
+
+    @Autowired
+    private MySource mySource;
+    @GetMapping("/test-stream2")
+    public String testCustomSpringCloudStream(){
+        this.mySource.output()
+                .send(
+                        MessageBuilder
+                                .withPayload("自定义stream接口发送的消息")
+                                .build()
+                );
+        return "success";
     }
 }

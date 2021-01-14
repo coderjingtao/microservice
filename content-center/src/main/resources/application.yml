@@ -19,14 +19,30 @@ spring:
         #指定 group
 #        group: DEFAULT_GROUP
         #指定 集群cluster
+#        cluster-name: Melbourne
     sentinel:
       transport:
         #指定 sentinel 控制台的地址
         dashboard: localhost:8080
-  #        cluster-name: Melbourne
+    stream:
+      rocketmq:
+        default:
+          producer:
+            # 解决Spring Cloud Stream + RocketMQ 发送消息失败的问题：RocketMQ Message hasn't been sent. Caused by Send [1] times, still failed, cost [xxx]ms
+            vipChannelEnabled: false
+        binder:
+          name-server: 127.0.0.1:9876
+      bindings:
+        output:
+          #用来指定生产消息的topic
+          destination: stream-test-topic
+        #自定义stream接口发送消息,必须与MySource.java中定义的名字一致
+        my-output:
+          #用来指定生产消息的topic
+          destination: stream-my-topic
+
   application:
     name: content-center
-
 #user-center:
 #  ribbon:
 #    # 指定ribbon负载均衡的规则,例如：com.netflix.loadbalancer.RandomRule

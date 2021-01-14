@@ -22,7 +22,7 @@ import java.util.Date;
 @RocketMQMessageListener(consumerGroup = "consumer-group", topic = "add-bonus")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
-public class AddBonusListener implements RocketMQListener<UserAddBonusMessageDTO> {
+public class AddBonusMQListener implements RocketMQListener<UserAddBonusMessageDTO> {
 
     private final UserMapper userMapper;
     private final BonusEventLogMapper bonusEventLogMapper;

@@ -1,16 +1,27 @@
 package com.joseph.contentcenter;
 
+import com.joseph.contentcenter.rocketmq.MySource;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 import tk.mybatis.spring.annotation.MapperScan;
 
-@MapperScan("com.joseph")
+/**
+ * 内容中心启动类
+ * MapperScan: 使用mybatis,并扫描所有的mapper接口
+ * EnableFeignClients: 开启FeignClient
+ * EnableBinding(Source.class): 使用 spring-cloud-stream 来生产消息
+ * @author Joseph.Liu
+ */
+@MapperScan("com.joseph.contentcenter.dao")
 @SpringBootApplication
 @EnableFeignClients
+@EnableBinding({Source.class, MySource.class})
 public class ContentCenterApplication {
 
     public static void main(String[] args) {

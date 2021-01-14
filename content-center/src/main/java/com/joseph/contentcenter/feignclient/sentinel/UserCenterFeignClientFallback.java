@@ -2,6 +2,8 @@ package com.joseph.contentcenter.feignclient.sentinel;
 
 import com.joseph.contentcenter.domain.dto.user.UserDTO;
 import com.joseph.contentcenter.feignclient.UserCenterFeignClient;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 /**
