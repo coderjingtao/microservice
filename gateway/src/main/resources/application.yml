@@ -1,0 +1,33 @@
+server:
+  port: 8040
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        #指定 nacos server的地址
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          #让gateway自动从服务发现组件nacos上找到其他微服务
+          enabled: true
+      routes:
+        - id: between_route
+          # 访问http://localhost:8040/users/1 即访问 http://user-center/users/1
+          uri: lb://user-center
+          predicates:
+            - TimeBetween=9:00 AM,3:00 PM
+          filters:
+            - PreLog=a,b
+# Actuator 暴露所有的端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      #健康检查显示详情
+      show-details: always

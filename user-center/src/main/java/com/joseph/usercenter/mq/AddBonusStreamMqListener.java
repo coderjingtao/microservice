@@ -1,5 +1,6 @@
 package com.joseph.usercenter.mq;
 
+import com.alibaba.fastjson.JSON;
 import com.joseph.usercenter.dao.user.BonusEventLogMapper;
 import com.joseph.usercenter.dao.user.UserMapper;
 import com.joseph.usercenter.domain.dto.mq.UserAddBonusMessageDTO;
@@ -28,7 +29,8 @@ public class AddBonusStreamMqListener {
 
 
     @StreamListener(Sink.INPUT)
-    public void receiveMessage(UserAddBonusMessageDTO userAddBonusMessageDTO){
+    public void receiveMessage(String message){
+        UserAddBonusMessageDTO userAddBonusMessageDTO = JSON.parseObject(message, UserAddBonusMessageDTO.class);
         this.userService.addBonus(userAddBonusMessageDTO);
         log.info("积分添加完毕...");
     }
