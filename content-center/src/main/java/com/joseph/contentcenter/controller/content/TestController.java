@@ -4,14 +4,17 @@ import com.joseph.contentcenter.domain.dto.user.UserDTO;
 import com.joseph.contentcenter.feignclient.StandAloneFeignClient;
 import com.joseph.contentcenter.feignclient.UserCenterFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RefreshScope //nacos配置属性的动态刷新而不用重启服务器
 public class TestController {
 
     @Autowired
@@ -75,4 +78,12 @@ public class TestController {
 //                );
 //        return "success";
 //    }
+
+    //测试nacos的配置管理
+    @Value("${your.configuration}")
+    private String yourConfiguration;
+    @GetMapping("/test-nacos-config")
+    public String testConfiguration(){
+        return yourConfiguration;
+    }
 }

@@ -1,0 +1,12 @@
+#此文件专门用于nacos配置管理服务器
+spring:
+  cloud:
+    nacos:
+      config:
+        #nacos 配置管理服务器地址
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+  application:
+    name: content-center
+  profiles:
+    active: dev
