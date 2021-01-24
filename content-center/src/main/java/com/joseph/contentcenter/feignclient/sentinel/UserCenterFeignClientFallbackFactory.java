@@ -5,8 +5,6 @@ import com.joseph.contentcenter.domain.dto.user.UserDTO;
 import com.joseph.contentcenter.feignclient.UserCenterFeignClient;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**

@@ -2,13 +2,13 @@ package com.joseph.usercenter.domain.entity.user;
 
 import java.util.Date;
 import javax.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
+import lombok.*;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
 public class User {
     /**

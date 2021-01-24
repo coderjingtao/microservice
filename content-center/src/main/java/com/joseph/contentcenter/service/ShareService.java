@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * @author Joseph.Liu
+ */
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @Slf4j
@@ -21,7 +24,7 @@ public class ShareService {
 
     private final UserCenterFeignClient userCenterFeignClient;
 
-    public ShareDTO findById(Integer id) throws Exception {
+    public ShareDTO findById(Integer id) {
         //获取分享详情
         Share share = this.shareMapper.selectByPrimaryKey(id);
         //获取分享发布人的id

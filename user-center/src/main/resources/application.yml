@@ -34,3 +34,9 @@ spring:
   application:
     # use -, do not use _ and special characters
     name: user-center
+
+# JWT 配置密钥及过期时间
+jwt:
+  secret: aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt
+  # 有效期，单位秒，默认2周
+  expire-time-in-second: 1209600

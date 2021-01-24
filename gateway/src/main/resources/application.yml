@@ -14,13 +14,16 @@ spring:
           #让gateway自动从服务发现组件nacos上找到其他微服务
           enabled: true
       routes:
-        - id: between_route
+        - id: user_route
           # 访问http://localhost:8040/users/1 即访问 http://user-center/users/1
           uri: lb://user-center
           predicates:
-            - TimeBetween=9:00 AM,3:00 PM
-          filters:
-            - PreLog=a,b
+            - Path=/users/**
+        - id: content_route
+          # 访问http://localhost:8040/shares/1 即访问 http://content-center/shares/1
+          uri: lb://content-center
+          predicates:
+            - Path=/shares/**,/admin/**
 # Actuator 暴露所有的端点
 management:
   endpoints:

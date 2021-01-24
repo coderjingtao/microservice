@@ -65,6 +65,8 @@ feign:
       #feign日志级别的全局配置
       default:
         loggerLevel: full
+        requestInterceptors:
+          - com.joseph.contentcenter.feignclient.interceptor.TokenTransmitRequestInterceptor
   httpclient:
     #让feign使用apache httpclient的连接池做请求，而不是默认的URLConnection(不支持连接池)
     enabled: true
@@ -85,3 +87,8 @@ management:
     web:
       exposure:
         include: '*'
+# JWT 配置密钥及过期时间，需要与用户中心的密钥保持一致
+jwt:
+  secret: aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt
+  # 有效期，单位秒，默认2周
+  expire-time-in-second: 1209600
