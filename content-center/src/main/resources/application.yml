@@ -45,6 +45,13 @@ spring:
 
   application:
     name: content-center
+  zipkin:
+    # zipkin的服务器地址
+    base-url: http://localhost:9411/
+  sleuth:
+    sampler:
+      # 数据上报抽样率，默认是0.1 (10%)，否则会很影响性能
+      probability: 1.0
 #user-center:
 #  ribbon:
 #    # 指定ribbon负载均衡的规则,例如：com.netflix.loadbalancer.RandomRule
@@ -92,3 +99,7 @@ jwt:
   secret: aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt
   # 有效期，单位秒，默认2周
   expire-time-in-second: 1209600
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

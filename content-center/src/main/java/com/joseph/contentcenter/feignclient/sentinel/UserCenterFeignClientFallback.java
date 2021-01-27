@@ -1,9 +1,8 @@
 package com.joseph.contentcenter.feignclient.sentinel;
 
+import com.joseph.contentcenter.domain.dto.user.UserAddBonusDTO;
 import com.joseph.contentcenter.domain.dto.user.UserDTO;
 import com.joseph.contentcenter.feignclient.UserCenterFeignClient;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,6 +30,11 @@ public class UserCenterFeignClientFallback implements UserCenterFeignClient {
 
     @Override
     public UserDTO postQuery(UserDTO userDTO) {
+        return null;
+    }
+
+    @Override
+    public UserDTO addBonus(UserAddBonusDTO userAddBonusDTO) {
         return null;
     }
 }

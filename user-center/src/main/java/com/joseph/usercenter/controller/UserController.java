@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 对用户的相关操作
+ * @author Joseph.Liu
+ */
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))

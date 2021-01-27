@@ -111,6 +111,17 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
+        <!-- 整合 Zipkin  其中已经包含了：调用链监控工具 Spring Cloud Sleuth -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+        <!-- 整合 PageHelper for Mybatis 分页查询 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.10</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

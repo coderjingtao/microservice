@@ -87,7 +87,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-
+        <!-- 整合 Zipkin  其中已经包含了：调用链监控工具 Spring Cloud Sleuth -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

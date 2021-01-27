@@ -3,6 +3,13 @@ server:
 spring:
   application:
     name: gateway
+  zipkin:
+    # zipkin的服务器地址
+    base-url: http://localhost:9411/
+  sleuth:
+    sampler:
+      # 数据上报抽样率，默认是0.1 (10%)，否则会很影响性能
+      probability: 1.0
   cloud:
     nacos:
       discovery:

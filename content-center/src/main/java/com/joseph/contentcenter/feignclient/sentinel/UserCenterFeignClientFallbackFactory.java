@@ -1,6 +1,7 @@
 package com.joseph.contentcenter.feignclient.sentinel;
 
 
+import com.joseph.contentcenter.domain.dto.user.UserAddBonusDTO;
 import com.joseph.contentcenter.domain.dto.user.UserDTO;
 import com.joseph.contentcenter.feignclient.UserCenterFeignClient;
 import feign.hystrix.FallbackFactory;
@@ -17,15 +18,15 @@ public class UserCenterFeignClientFallbackFactory implements FallbackFactory<Use
 
     /**
      * 当sentinel对该资源: http://user-center/users/{userId} 设置流控降级规则，并触发，处理逻辑会转到该方法
-     * @param throwable
+     * @param throwable 出错的原因
      * @return
      */
     @Override
-    public UserCenterFeignClient create(Throwable throwable) {
+    public UserCenterFeignClient create(Throwable cause) {
         return new UserCenterFeignClient() {
             @Override
             public UserDTO findByUserId(Integer userId) {
-                log.warn("内容中心远程调用【用户中心】被限流/降级了",throwable);
+                log.warn("内容中心远程调用【用户中心】被限流/降级了",cause);
                 UserDTO userDTO = new UserDTO();
                 userDTO.setWxNickname("服务降级后，会显示该属性");
                 return userDTO;
@@ -38,6 +39,12 @@ public class UserCenterFeignClientFallbackFactory implements FallbackFactory<Use
 
             @Override
             public UserDTO postQuery(UserDTO userDTO) {
+                return null;
+            }
+
+            @Override
+            public UserDTO addBonus(UserAddBonusDTO userAddBonusDTO) {
+                log.warn("内容中心远程调用【用户中心】被限流/降级了",cause);
                 return null;
             }
         };

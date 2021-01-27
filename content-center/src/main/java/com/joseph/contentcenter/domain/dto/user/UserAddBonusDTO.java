@@ -1,4 +1,4 @@
-package com.joseph.usercenter.domain.dto.mq;
+package com.joseph.contentcenter.domain.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 使用MQ进行用户积分操作的DTO
+ * 使用OpenFeign进行用户积分操作的DTO
  * @author Joseph.Liu
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserAddBonusMessageDTO {
+public class UserAddBonusDTO {
     /**
      * 为谁加积分
      */

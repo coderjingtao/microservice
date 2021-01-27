@@ -14,23 +14,21 @@ import javax.persistence.Table;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "rocketmq_transaction_log")
-public class RocketmqTransactionLog {
-    /**
-     * id
-     */
+@Table(name = "mid_user_share")
+public class MidUserShare {
     @Id
     @GeneratedValue(generator = "JDBC")
     private Integer id;
 
     /**
-     * 事务id
+     * share.id
      */
-    @Column(name = "transaction_Id")
-    private String transactionId;
+    @Column(name = "share_id")
+    private Integer shareId;
 
     /**
-     * 日志
+     * user.id
      */
-    private String log;
+    @Column(name = "user_id")
+    private Integer userId;
 }

@@ -1,5 +1,6 @@
 package com.joseph.contentcenter.feignclient;
 
+import com.joseph.contentcenter.domain.dto.user.UserAddBonusDTO;
 import com.joseph.contentcenter.domain.dto.user.UserDTO;
 import com.joseph.contentcenter.feignclient.sentinel.UserCenterFeignClientFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -28,7 +29,7 @@ public interface UserCenterFeignClient {
     UserDTO findByUserId(@PathVariable Integer userId);
 
     /**
-     * Get多参数请求
+     * Get多参数查询请求
      * @param userDTO
      * @return
      */
@@ -36,10 +37,18 @@ public interface UserCenterFeignClient {
     UserDTO query(@SpringQueryMap UserDTO userDTO);
 
     /**
-     * Post多参数请求
+     * Post多参数查询请求
      * @param userDTO
      * @return
      */
     @RequestMapping(value = "/users/post", method = RequestMethod.POST)
     UserDTO postQuery(@RequestBody UserDTO userDTO);
+
+    /**
+     * 给用户添加/扣减积分
+     * @param userAddBonusDTO
+     * @return
+     */
+    @PutMapping("/users/add-bonus")
+    UserDTO addBonus(@RequestBody UserAddBonusDTO userAddBonusDTO);
 }
