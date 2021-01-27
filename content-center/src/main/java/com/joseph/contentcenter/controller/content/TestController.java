@@ -10,6 +10,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -79,11 +80,24 @@ public class TestController {
 //        return "success";
 //    }
 
-    //测试nacos的配置管理
+    /**
+     * 测试nacos的配置管理
+     */
     @Value("${your.configuration}")
     private String yourConfiguration;
     @GetMapping("/test-nacos-config")
     public String testConfiguration(){
         return yourConfiguration;
     }
+    /**
+     * 测试整合异构微服务non-springboot microservice是否成功
+     */
+    @Autowired
+    private RestTemplate restTemplate;
+    @GetMapping("/test-node-service")
+    public String testNonSpringBootService(){
+        //http://wii -->服务发现组件--> http://localhost:8070 --> wii server config --> http://localhost:8060
+        return this.restTemplate.getForObject("http://wii",String.class);
+    }
+
 }
