@@ -94,6 +94,9 @@ management:
     web:
       exposure:
         include: '*'
+  endpoint:
+    health:
+      show-details: always
 # JWT 配置密钥及过期时间，需要与用户中心的密钥保持一致
 jwt:
   secret: aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsssttt

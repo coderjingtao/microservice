@@ -51,3 +51,13 @@ jwt:
 logging:
   level:
     org.springframework.cloud.sleuth: debug
+
+# Actuator 暴露所有的端点，以及健康检查的详情。这样才能显示出已经整合了 sentinel
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

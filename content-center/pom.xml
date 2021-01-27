@@ -19,7 +19,7 @@
     </properties>
 
     <dependencies>
-        <!-- 整合 spring boot 以及 spring mvc -->
+        <!-- 整合 spring mvc -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
